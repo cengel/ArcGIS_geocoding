@@ -19,12 +19,12 @@ To use this service :
 - You need to authenticate with WebAuth.
 - You need to get a token from here http://locator.stanford.edu/arcgis/tokens/
 
-    Username: add `WIN\` before your SunetID, for example: `WIN\cengel`
-    Client: RequestIP
-    HTTP referer: [leave blank]
-    IP:	[leave blank]
-    Expiration: (you decide)
-    Format: HTML
+        Username: add WIN\ before your SunetID, for example: WIN\cengel
+        Client: RequestIP
+        HTTP referer: [leave blank]
+        IP:	[leave blank]
+        Expiration: (you decide)
+        Format: HTML  
 
     (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say from your home wireless over VPN to your lab on campus, the same token will not work.)
 
@@ -77,7 +77,7 @@ To use it do this.
               '1355 Market Street Suite 900, San Francisco, CA 94103'), stringsAsFactors = F)
 
     # source the R code
-    source(https://raw.github.com/...")
+    source("https://raw.githubusercontent.com/cengel/ArcGIS_geocoding/master/SUL_gcFunctions.R")
 
     # set your token
     myToken <- "YOUR TOKEN HERE"
