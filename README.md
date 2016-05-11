@@ -24,7 +24,7 @@ To use this service :
         HTTP referer: [leave blank]
         IP:	[leave blank]
         Expiration: (you decide)
-        Format: HTML  
+        Format: HTML
 
     (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say from your home wireless over VPN to your lab on campus, the same token will not work.)
 
@@ -67,7 +67,7 @@ Batch geocoding _performance_ is better when the address parts are stored in sep
 
 ## R geocode function
 
-Here I provide a very simple, **by no means foolproof** R function to do this, called `geocodeSL`. It takes one address at a time in Singleline format
+Here I provide a very simple, **by no means foolproof** R function to do this, called `geocodeSLSF`. It takes one address at a time in Singleline format.
 
 To use it do this.
 
@@ -83,7 +83,7 @@ To use it do this.
     myToken <- "YOUR TOKEN HERE"
 
     # geocode with
-    do.call("rbind", lapply(adr, function(x) geocodeSL(x, myToken))
+    do.call("rbind", lapply(adr, function(x) geocodeSLSF(x, myToken))
 
 
 ## References
@@ -94,6 +94,5 @@ I found [this](https://developers.arcgis.com/rest/geocode/api-reference/geocodin
 ## To Do
 - option to submit multiple field and multiple line addresses
 - option to return more (and less) values
-- add error checks (check for `#` in address and provide proper feedback
-)
-- additional geocoders?
+- option to request street addresses only
+- add error checks (check for `#` in address and provide proper feedback)

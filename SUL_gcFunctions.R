@@ -1,8 +1,26 @@
-## begin geocode function 
-# takes token and one address at a time (Single Line) as single line (Single Field)
-# currently returns lat, lon, status, score, side, match address.
+################################################
+## Single Line, Single Field Geocode Function ##
+################################################
+# the function takes:
+# - token  
+# - one address at a time (Single Line) as one string (Single Field)
+# the function returns:
+# lon, lat -    The primary x/y coordinates of the address returned by the geocoding service in WGS84 
+# score -       The accuracy of the address match between 0 and 100.
+# locName - 
+# status -      Whether a batch geocode request results in a match (M), tie (T), or unmatch (U)
+# matchAddr -   Complete address returned for the geocode request.
+# side -        The side of the street where an address resides relative to the direction 
+#               of feature digitization
+# addressType - The match level for a geocode request. "PointAddress" is typically the 
+#               most spatially accurate match level. "StreetAddress" differs from PointAddress 
+#               because the house number is interpolated from a range of numbers. "StreetName" is similar,
+#               but without the house number.
+
 geocodeSLSF <- function (address, token){
   require(httr)
+  
+  # Stanford geolocator
   gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses"
 
   # template for SingleLine format
@@ -15,12 +33,13 @@ geocodeSLSF <- function (address, token){
 
   # parse JSON and process result
   res <- content(rawdata, "parsed", "application/json")
-  resdf <- with(res$locations[[1]], {data.frame(lat = attributes$Y,
-                                                lon = attributes$X,
+  resdf <- with(res$locations[[1]], {data.frame(lon = location$x,
+                                                lat = location$y,
+                                                score = score, 
+                                                locName = attributes$Loc_name,
                                                 status = attributes$Status,
-                                                score = attributes$Score,
+                                                matchAddr = attributes$Match_addr,
                                                 side = attributes$Side,
-                                                matchAdr = attributes$Match_addr)})
+                                                addressType = attributes$Addr_type)})
   return(resdf)
 }
-## end geocode function
