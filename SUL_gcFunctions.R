@@ -1,13 +1,14 @@
 ################################################
 ## Single Line, Single Field Geocode Function ##
 ################################################
-# the function takes:
-# - token  
+# The function takes:
 # - one address at a time (Single Line) as one string (Single Field)
-# the function returns:
+# - token
+# - allow to return Postal codes if a full street address match cannot be found (default is TRUE)
+# The function returns:
 # lon, lat -    The primary x/y coordinates of the address returned by the geocoding service in WGS84 
 # score -       The accuracy of the address match between 0 and 100.
-# locName - 
+# locName -     The component locator used to return a particular match result
 # status -      Whether a batch geocode request results in a match (M), tie (T), or unmatch (U)
 # matchAddr -   Complete address returned for the geocode request.
 # side -        The side of the street where an address resides relative to the direction 
@@ -17,7 +18,7 @@
 #               because the house number is interpolated from a range of numbers. "StreetName" is similar,
 #               but without the house number.
 
-geocodeSLSF <- function (address, token){
+geocodeSLSF <- function (address, token, postal = TRUE){
   require(httr)
   
   # Stanford geolocator
@@ -26,7 +27,9 @@ geocodeSLSF <- function (address, token){
   # template for SingleLine format
   pref <- "{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'"
   suff <- "'}}]}"
-  url <- URLencode(paste0(gserver, "?addresses=", pref, address, suff, "&token=", token, "&f=json"))
+  
+  # url
+  url <- URLencode(paste0(gserver, "?addresses=", pref, address, suff, "&token=", token, ifelse(postal, "&f=json", "&f=json&category=Address")))
 
   # submit
   rawdata <- GET(url)
