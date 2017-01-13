@@ -29,7 +29,7 @@ To use this service :
     (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say from your home wireless over VPN to your lab on campus, the same token will not work.)
 
 
-# Geocoding requests
+## Geocoding requests
 
 Now let's put together a URL that will determine the the location for `380 New York St,  Redlands, CA`.
 
@@ -94,5 +94,4 @@ I found [this](https://developers.arcgis.com/rest/geocode/api-reference/geocodin
 ## To Do
 - option to submit multiple field and multiple line addresses
 - option to return more (and less) values
-- option to request street addresses only
 - add error checks (check for `#` in address and provide proper feedback)
