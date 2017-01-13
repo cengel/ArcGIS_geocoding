@@ -5,13 +5,11 @@ Instructions for how to use R to access the API of the ArcGIS geodocer provided 
 
 ## Stanford Library Geocoding Service
 
-Thanks to our fabulous Geospatial Manager [Stace Maples](https://library.stanford.edu/people/maples) who is tirelessly working to make our GIS lives easier we have our own geolocator at Stanford:
-
-http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer?f=pjson.
+Thanks to our fabulous Geospatial Manager [Stace Maples](https://library.stanford.edu/people/maples) who is tirelessly working to make our GIS lives easier we have our own geocoding service at Stanford:
 
 >> http://locator.stanford.edu/arcgis/rest/services/geocode
 
-The services available here cover the US and Canada only ([ArcGIS Composite North America Geocode Service](http://help.arcgis.com/en/data-appliance/4.0/help/basemap/index_Left.htm#CSHID=na_address_locator_10.htm%3F|StartTopic=content%2Fna_address_locator_10.htm%3F|SkinName=agda)). The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need let Stace know if you are intending to run a major job!**
+The services available here cover the US and Canada only ([ArcGIS Composite North America Geocode Service](http://help.arcgis.com/en/data-appliance/4.0/help/basemap/content/na_address_locator_10.htm). The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need let Stace know if you are intending to run a major job!**
 
 To use this service :
 
