@@ -1,8 +1,8 @@
-################################################
-## Single Line, Single Field Geocode Function ##
-################################################
+##################################
+## Single Line Geocode Function ##
+##################################
 # The function takes:
-# - one address at a time (Single Line) as one string (Single Field)
+# - one address at a time as one string (SingleLine)
 # - token
 # - allow to return Postal codes if a full street address match cannot be found (default is TRUE)
 # The function returns:
@@ -18,7 +18,7 @@
 #               because the house number is interpolated from a range of numbers. "StreetName" is similar,
 #               but without the house number.
 
-geocodeSLSF <- function (address, token, postal = TRUE){
+geocodeSL <- function (address, token, postal = TRUE){
   require(httr)
   
   # Stanford geolocator

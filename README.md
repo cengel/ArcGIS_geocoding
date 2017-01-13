@@ -27,7 +27,7 @@ To use this service :
     (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say from your home wireless over VPN to your lab on campus, the same token will not work.)
 
 
-## Geocoding requests
+## Anatomy of geocoding requests
 
 Now let's put together a URL that will determine the the location for `380 New York St,  Redlands, CA`.
 
@@ -59,7 +59,7 @@ That makes for the following URL:
 
     http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
 
-ArcGIS takes addresses in Singleline and Mutiline mode, so you can submit one or several requests with each URL. Furthermore, the addresses in your table can be stored in a single field (as used above) or in multiple fields, one for each address component (Street, City, etc). The _quality_ of the returned result will not be affected by the form requests are submitted.
+The ArcGIS REST geocoding service v10.0 and later takes addresses in [SingleLine (also called single field) and MultiLine (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used above) or in multiple fields, one for each address component (Street, City, etc). The _quality_ of the returned result will not be affected by the form requests are submitted.
 
 Batch geocoding _performance_ is better when the address parts are stored in separate fields. However, if there is an error in your batch, all the addresses in that batch that already have been geocoded will be dropped. Furthermore, a lot of addresses in one batch can cause the URL length limit to be exceeded and the URL to be truncated, so it is necessary to use the POST method to send those requests. The maximum number of addresses that can be geocoded in a single batch request on the Stanford geocode server is set to **1000**.
 
@@ -81,7 +81,7 @@ To use it do this.
     myToken <- "YOUR TOKEN HERE"
 
     # geocode with
-    do.call("rbind", lapply(adr, function(x) geocodeSLSF(x, myToken))
+    do.call("rbind", lapply(adr, function(x) geocodeSL(x, myToken))
 
 
 ## References
