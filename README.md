@@ -65,7 +65,7 @@ Batch geocoding _performance_ is better when the address parts are stored in sep
 
 ## R geocode function
 
-Here I provide a very simple, **by no means foolproof** R function to do this, called `geocodeSLSF`. It takes one address at a time in Singleline format.
+Here I provide a very simple, **by no means foolproof** R function to do this, called `geocodeSL`. It takes one address at a time in Singleline format.
 
 To use it do this.
 
