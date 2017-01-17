@@ -72,7 +72,7 @@ To use it do this.
     # make up some addresses:
     adr <- c('450 Serra Mall, Stanford, CA, 94305',
               '1600 Amphitheatre Pkwy, Mountain View, CA 94043',
-              '1355 Market Street Suite 900, San Francisco, CA 94103'), stringsAsFactors = F)
+              '1355 Market Street Suite 900, San Francisco, CA 94103')
 
     # source the R code
     source("https://raw.githubusercontent.com/cengel/ArcGIS_geocoding/master/SUL_gcFunctions.R")
@@ -81,7 +81,7 @@ To use it do this.
     myToken <- "YOUR TOKEN HERE"
 
     # geocode with
-    do.call("rbind", lapply(adr, function(x) geocodeSL(x, myToken))
+    do.call("rbind", lapply(adr, function(x) geocodeSL(x, myToken)))
 
 
 ## References
