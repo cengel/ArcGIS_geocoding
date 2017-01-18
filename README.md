@@ -1,6 +1,6 @@
 # Geocoding Addresses with the ArcGIS REST API (Stanford Affiliates Only)
 
-Instructions for how to use R to access the API of the ArcGIS geodocer provided by the Stanford Branner Library. Access to this service is restricted to Stanford University Affiliates with a valid SUNETId.
+Instructions for how to use R to access the API of the ArcGIS geodocer provided by the Stanford Branner Library. Access to this service is restricted to Stanford University Affiliates with a valid SUNet ID.
 
 
 ## Stanford Library Geocoding Service
@@ -9,7 +9,7 @@ Thanks to our fabulous Geospatial Manager [Stace Maples](https://library.stanfor
 
 >> http://locator.stanford.edu/arcgis/rest/services/geocode
 
-The services available here cover the US and Canada only ([ArcGIS Composite North America Geocode Service](http://help.arcgis.com/en/data-appliance/4.0/help/basemap/content/na_address_locator_10.htm). The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need let Stace know if you are intending to run a major job!**
+The services described here covers the US and Canada only ([ArcGIS Composite North America Geocode Service](http://help.arcgis.com/en/data-appliance/4.0/help/basemap/content/na_address_locator_10.htm). The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need let Stace know if you are intending to run a major job!**
 
 To use this service :
 
@@ -24,12 +24,12 @@ To use this service :
         Expiration: (you decide)
         Format: HTML
 
-    (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say from your home wireless over VPN to your lab on campus, the same token will not work.)
+    (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say, from your home wireless over VPN to your lab on campus, the same token will not work.)
 
 
 ## Anatomy of geocoding requests
 
-Now let's put together a URL that will determine the the location for `380 New York St,  Redlands, CA`.
+Now let's put together a URL that will determine the location for `380 New York St,  Redlands, CA`.
 
 Here is what we need:
 
