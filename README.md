@@ -24,7 +24,7 @@ To use this service :
         Expiration: (you decide)
         Format: HTML
 
-    (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move, say, from your home wireless over VPN to your lab on campus, the same token will not work.)
+    (The token is tied to the IP address of the machine that requests the service, so if you use a laptop and move to a different network you may have to request a differnet token.)
 
 
 ## Anatomy of geocoding requests
@@ -59,13 +59,16 @@ That makes for the following URL:
 
     http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
 
-The ArcGIS REST geocoding service v10.0 and later takes addresses in [SingleLine (also called single field) and MultiLine (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used above) or in multiple fields, one for each address component (Street, City, etc). The _quality_ of the returned result will not be affected by the form requests are submitted.
+The ArcGIS REST geocoding service v10.0 and later takes addresses in [Single Line (also called single field) and Multi Line (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used in the URL above) or in multiple, separate fields, one for each address component (Street, City, etc). 
 
-Batch geocoding _performance_ is better when the address parts are stored in separate fields. However, if there is an error in your batch, all the addresses in that batch that already have been geocoded will be dropped. Furthermore, a lot of addresses in one batch can cause the URL length limit to be exceeded and the URL to be truncated, so it is necessary to use the POST method to send those requests. The maximum number of addresses that can be geocoded in a single batch request on the Stanford geocode server is set to **1000**.
+Furthermore, there are two ways to send the addresses to the geocoding service: individually or as batch of several. Individual requests are more time consuming. For example, geocoding 1000 addresses takes over 2 minutes as single requests vs. 15 seconds as batch request. Batch geocoding is slightly faster when the address components are stored in separate fields (Multi Line). However, if there is an error in your batch, all the addresses in that batch that already have been geocoded will be dropped. **The maximum number of addresses that can be geocoded in a single batch request on the Stanford geocode server is 1000**.
 
-## R geocode function
+## R geocode functions
 
-Here I provide a very simple, **by no means foolproof** R function to do this, called `geocodeSL`. It takes one address at a time in Singleline format.
+Here I provide two very simple, **by no means foolproof** R functions to do this. 
+
+### Single Line
+`geocodeSL` takes one address at a time in Singleline format. Each address-string is sent as a single request to the geocode server.
 
 To use it do this.
 
@@ -84,12 +87,29 @@ To use it do this.
     do.call("rbind", lapply(adr, function(x) geocodeSL(x, myToken)))
 
 
+### Multi Line Batch
+`geocodeML_batch` takes the address in separate fields and sends them all at once in a POST request.
+
+To use it do this.
+
+    # make up some addresses:
+    adr_df <- data.frame(
+               street = c('450 Serra Mall', '1600 Amphitheatre Pkwy', '1355 Market Street Suite 900'), 
+               city = c("Stanford", "Mountain View", "San Francisco"), 
+               state = "CA", 
+               zip = c("94305", "94043", "94103"))
+
+    # source the R code
+    source("https://raw.githubusercontent.com/cengel/ArcGIS_geocoding/master/SUL_gcFunctions.R")
+
+    # set your token
+    myToken <- "YOUR TOKEN HERE"
+    
+    # geocode with
+    geocodeML_batch(adr_df$street, adr_df$city, adr_df$state, adr_df$zip, myToken)
+
+
+
 ## References
 
 I found [this](https://developers.arcgis.com/rest/geocode/api-reference/geocoding-geocode-addresses.htm) helpful. Even though it is about ESRI's World Geocoder it is very applicable for other ESRI geocoders.
-
-
-## To Do
-- option to submit multiple field and multiple line addresses
-- option to return more (and less) values
-- add error checks (check for `#` in address and provide proper feedback)
