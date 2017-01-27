@@ -92,12 +92,13 @@ To use it do this.
 
 To use it do this.
 
-    # make up some addresses:
+    # make up a data frame with some addresses:
     adr_df <- data.frame(
+               ID = 1:3,
                street = c('450 Serra Mall', '1600 Amphitheatre Pkwy', '1355 Market Street Suite 900'), 
-               city = c("Stanford", "Mountain View", "San Francisco"), 
-               state = "CA", 
-               zip = c("94305", "94043", "94103"))
+               city = c('Stanford', 'Mountain View', 'San Francisco'), 
+               state = 'CA', 
+               zip = c('94305', '94043', '94103'))
 
     # source the R code
     source("https://raw.githubusercontent.com/cengel/ArcGIS_geocoding/master/SUL_gcFunctions.R")
@@ -106,8 +107,10 @@ To use it do this.
     myToken <- "YOUR TOKEN HERE"
     
     # geocode with
-    geocodeML_batch(adr_df$street, adr_df$city, adr_df$state, adr_df$zip, myToken)
-
+    adr_gc <- geocodeML_batch(adr_df$ID, adr_df$street, adr_df$city, adr_df$state, adr_df$zip, myToken)
+    
+    # join back with original data
+    merge(adr_df, adr_gc, by = "ID", all.x = T)
 
 
 ## References
