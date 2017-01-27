@@ -52,12 +52,15 @@ geocodeSL <- function (address, token, postal = TRUE){
 ## Multi Line Batch Geocode Function ##
 #######################################
 # The function takes:
+# - ID variable to identify records, must be numeric and should be unique
 # - multiple addresses as vectors, separated into: Street, City, State, Zip
 # - token
 #
 # It can take a maximum of 1000 addresses. If more, it returns an error.
 #
 # The function returns a data frame with the following fields:
+# ID -          Result ID can be used to join the output fields in the response to the attributes 
+#               in the original address table.
 # lon, lat -    The primary x/y coordinates of the address returned by the geocoding service in WGS84 
 # score -       The accuracy of the address match between 0 and 100.
 # locName -     The component locator used to return a particular match result
@@ -70,24 +73,33 @@ geocodeSL <- function (address, token, postal = TRUE){
 #               because the house number is interpolated from a range of numbers. "StreetName" is similar,
 #               but without the house number.
 
-geocodeML_batch <- function(street, city, state, zip, token){
+geocodeML_batch <- function(id, street, city, state, zip, token){
   require(httr)
   require(rjson)
   
   # check if we have more than 1000, if so stop.
-  if (length(street) > 1000){
-    print(paste("length is: ", length(street)))
+  if (length(id) > 1000){
+    print(paste("length is: ", length(id)))
     stop("Can only process up to 1000 addresses at a time.")}
   
+  # check if id is numeric
+  if (!is.numeric(id)) {
+    stop("id variable needs to be numeric.")
+  }
+  
   # make data frame
-  adr_df <- data.frame(OBJECTID = seq_along(street), 
+  adr_df <- data.frame(OBJECTID = id, 
                        Street = street,
                        City = city,
                        State = state,
                        Zip = zip)
   
   # make json
-  adr_json <- toJSON(list(records = apply(adr_df, 1, function(i) list(attributes = as.list(i)))))
+  tmp_list <- apply(adr_df, 1, function(i) list(attributes = as.list(i)))
+  # need to coerce ID back to numeric
+  tmp_list <- lapply(tmp_list, function(i) { i$attributes$OBJECTID <- as.numeric(i$attributes$OBJECTID); i })
+  adr_json <- toJSON(list(records = tmp_list))
+  
   gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses"
   
   # submit
@@ -101,7 +113,8 @@ geocodeML_batch <- function(street, city, state, zip, token){
   res <- content(req, "parsed", "application/json")
   resdfr <- data.frame()
   for (i in seq_len(length(res$locations))){
-    d <- with(res$locations[[i]], {data.frame(lon = location$x,
+    d <- with(res$locations[[i]], {data.frame(ID = attributes$ResultID,
+                                              lon = location$x,
                                               lat = location$y,
                                               score = score, 
                                               locName = attributes$Loc_name,
