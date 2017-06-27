@@ -37,8 +37,8 @@ geocodeSL <- function (address, token, postal = TRUE){
 
   # parse JSON and process result
   res <- content(rawdata, "parsed", "application/json")
-  resdf <- with(res$locations[[1]], {data.frame(lon = location$x,
-                                                lat = location$y,
+  resdf <- with(res$locations[[1]], {data.frame(lon = as.numeric(location$x),
+                                                lat = as.numeric(location$y),
                                                 score = score, 
                                                 locName = attributes$Loc_name,
                                                 status = attributes$Status,
@@ -114,8 +114,8 @@ geocodeML_batch <- function(id, street, city, state, zip, token){
   resdfr <- data.frame()
   for (i in seq_len(length(res$locations))){
     d <- with(res$locations[[i]], {data.frame(ID = attributes$ResultID,
-                                              lon = location$x,
-                                              lat = location$y,
+                                              lon = as.numeric(location$x),
+                                              lat = as.numeric(location$y),
                                               score = score, 
                                               locName = attributes$Loc_name,
                                               status = attributes$Status,
