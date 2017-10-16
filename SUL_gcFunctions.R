@@ -94,6 +94,9 @@ geocodeML_batch <- function(id, street, city, state, zip, token){
                        State = state,
                        Zip = zip)
   
+  # Set missing ZIP codes to empty strings
+  adr_df$Zip <- ifelse(is.na(adr_df$Zip), '', adr_df$Zip)
+  
   # make json
   tmp_list <- apply(adr_df, 1, function(i) list(attributes = as.list(i)))
   # need to coerce ID back to numeric
