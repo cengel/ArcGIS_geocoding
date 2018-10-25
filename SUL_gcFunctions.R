@@ -23,7 +23,8 @@ geocodeSL <- function (address, token, postal = TRUE){
   require(httr)
   
   # Stanford geolocator
-  gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses"
+  gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
+  
 
   # template for SingleLine format
   pref <- "{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'"
@@ -103,7 +104,8 @@ geocodeML_batch <- function(id, street, city, state, zip, token){
   tmp_list <- lapply(tmp_list, function(i) { i$attributes$OBJECTID <- as.numeric(i$attributes$OBJECTID); i })
   adr_json <- toJSON(list(records = tmp_list))
   
-  gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses"
+  gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
+  
   
   # submit
   req <- POST(
