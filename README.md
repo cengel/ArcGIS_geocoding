@@ -9,7 +9,7 @@ Thanks to our fabulous Geospatial Manager [Stace Maples](https://library.stanfor
 
 >> http://locator.stanford.edu/arcgis/rest/services/geocode
 
-The services described here covers the US and Canada only ([ArcGIS Composite North America Geocode Service](http://help.arcgis.com/en/data-appliance/4.0/help/basemap/content/na_address_locator_10.htm). The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need let Stace know if you are intending to run a major job!**
+The service described here covers the __US only__. The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need to let Stace know if you are intending to run a major job!**
 
 To use this service :
 
@@ -34,7 +34,7 @@ Now let's put together a URL that will determine the location for `380 New York 
 Here is what we need:
 
 - The request URL
-    `http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses`
+    `http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite /GeocodeServer/geocodeAddresses`
 
 - The request parameters, required are `addresses=`, `token=`, and `format=` (for output).
 
@@ -57,7 +57,7 @@ We attach all the request parameters to the geocoding service URL after a `?`
 
 That makes for the following URL:
 
-    http://locator.stanford.edu/arcgis/rest/services/geocode/Composite_NorthAmerica/GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
+    http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite /GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
 
 The ArcGIS REST geocoding service v10.0 and later takes addresses in [Single Line (also called single field) and Multi Line (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used in the URL above) or in multiple, separate fields, one for each address component (Street, City, etc). 
 
