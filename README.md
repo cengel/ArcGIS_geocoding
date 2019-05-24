@@ -57,7 +57,7 @@ We attach all the request parameters to the geocoding service URL after a `?`
 
 That makes for the following URL:
 
-    http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite /GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
+    http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
 
 The ArcGIS REST geocoding service v10.0 and later takes addresses in [Single Line (also called single field) and Multi Line (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used in the URL above) or in multiple, separate fields, one for each address component (Street, City, etc). 
 
