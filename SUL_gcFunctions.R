@@ -43,7 +43,7 @@ geocodeSL <- function (address, token, geocoder = "USA_Comp", postal = TRUE){
   
   # url
   #url <- URLencode(paste0(gserver, "?addresses=", pref, address, suff, "&token=", token, ifelse(postal, "&f=json", "&f=json&category=Address")))
-  url <- paste0(gserver, "?addresses=", pref, address_enc, suff, "&token=", myToken, ifelse(postal, "&f=json", "&f=json&category=Address"))
+  url <- paste0(gserver, "?addresses=", pref, address_enc, suff, "&token=", token, ifelse(postal, "&f=json", "&f=json&category=Address"))
   
   # submit
   rawdata <- GET(url)
