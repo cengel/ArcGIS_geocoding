@@ -24,23 +24,27 @@ geocodeSL <- function (address, token, geocoder = "USA_Comp", postal = TRUE){
   
   if (geocoder == "USA_Str"){
     # Stanford geolocator
-    gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/USA_StreetAddress/GeocodeServer/geocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_StreetAddress/GeocodeServer/geocodeAddresses"
     # template for Single Line format
-    pref <- "{'records':[{'attributes':{'OBJECTID':1,'Single Line Input':'"
+    #pref <- "{'records':[{'attributes':{'OBJECTID':1,'Single Line Input':'"
+    pref <- URLencode("{'records':[{'attributes':{'OBJECTID':1,'Single Line Input':'", reserved = TRUE)
   }
   else if (geocoder == "USA_Comp") {
-    gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
-    pref <- "{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
+    #pref <- "{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'"
+    pref <- URLencode("{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'", reserved = TRUE)
   }
   else{
     stop("please provide a valid geocoder")
   }
   
-  suff <- "'}}]}"
+  suff <- URLencode("'}}]}", reserved = TRUE)
+  address_enc <- URLencode(address, reserved = TRUE)
   
   # url
-  url <- URLencode(paste0(gserver, "?addresses=", pref, address, suff, "&token=", token, ifelse(postal, "&f=json", "&f=json&category=Address")))
-
+  #url <- URLencode(paste0(gserver, "?addresses=", pref, address, suff, "&token=", token, ifelse(postal, "&f=json", "&f=json&category=Address")))
+  url <- paste0(gserver, "?addresses=", pref, address_enc, suff, "&token=", myToken, ifelse(postal, "&f=json", "&f=json&category=Address"))
+  
   # submit
   rawdata <- GET(url)
 
@@ -117,12 +121,13 @@ geocodeML_batch <- function(id, street, city, state, zip, token, geocoder = "USA
     i})
 
   adr_json <- toJSON(list(records = tmp_list))
+  adr_json_enc <- URLencode(adr_json, reserved = TRUE)
   
   if(geocoder == "USA_Comp"){
-    gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
     }
   else if(geocoder == "USA_Str"){
-    gserver <- "http://locator.stanford.edu/arcgis/rest/services/geocode/USA_StreetAddress/GeocodeServer/geocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_StreetAddress/GeocodeServer/geocodeAddresses"
   }
   else{
     stop(paste(geocoder, "please provide a valid geocoder"))
