@@ -7,7 +7,7 @@ Instructions for how to use R to access the API of the ArcGIS geodocer provided 
 
 Thanks to our fabulous Geospatial Manager [Stace Maples](https://library.stanford.edu/people/maples) who is tirelessly working to make our GIS lives easier we have our own geocoding service at Stanford:
 
->> http://locator.stanford.edu/arcgis/rest/services/geocode
+>> https://locator.stanford.edu/arcgis/rest/services/geocode
 
 The service described here covers the __US only__. The good news here are that there are no limits as of how many addresses you can throw at this server. However, **you need to let Stace know if you are intending to run a major job!**
 
@@ -15,7 +15,7 @@ To use this service :
 
 - You need to be on the Stanford network or use [VPN](https://uit.stanford.edu/service/vpn/).
 - You need to authenticate with WebAuth.
-- You need to get a token from here http://locator.stanford.edu/arcgis/tokens/
+- You need to get a token from here https://locator.stanford.edu/arcgis/tokens/
 
         Username: add WIN\ before your SunetID, for example: WIN\cengel
         Client: RequestIP
@@ -34,7 +34,7 @@ Now let's put together a URL that will determine the location for `380 New York 
 Here is what we need:
 
 - The request URL
-    `http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite /GeocodeServer/geocodeAddresses`
+    `https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite /GeocodeServer/geocodeAddresses`
 
 - The request parameters, required are `addresses=`, `token=`, and `format=` (for output).
 
@@ -53,11 +53,11 @@ ArcGIS requires also the input addresses also to be in JSON format, which means 
     }
 
 
-We attach all the request parameters to the geocoding service URL after a `?`
+The addresses then need to be [URL encoded](https://en.wikipedia.org/wiki/Percent-encoding). Finally we attach all the request parameters to the geocoding service URL after a `?`
 
-That makes for the following URL:
+That makes for the following, rather cryptic looking URL:
 
-    http://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses?addresses={"records":[{"attributes":{"OBJECTID":1,"SingleLine":"380 New York St., Redlands, CA"}}]}&token=<YOUR TOKEN>&f=pjson
+    https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses?addresses=%7B%22records%22%3A%5B%7B%22attributes%22%3A%7B%22OBJECTID%22%3A1%2C%22SingleLine%22%3A%22380+New+York+St.%2C+Redlands%2CCA%22%7D%7D%5D%7D&&token=<YOUR TOKEN>&f=pjson
 
 The ArcGIS REST geocoding service v10.0 and later takes addresses in [Single Line (also called single field) and Multi Line (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used in the URL above) or in multiple, separate fields, one for each address component (Street, City, etc). 
 
