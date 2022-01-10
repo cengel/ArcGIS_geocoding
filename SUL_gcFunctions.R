@@ -31,6 +31,7 @@ geocodeSL <- function (address, token, geocoder = "USA_Comp", postal = TRUE){
   }
   else if (geocoder == "USA_Comp") {
     gserver <- "https://locator.stanford.edu/arcgis/rest/services/Geocode/NorthAmerica_Composite/GeocodeServer/GeocodeAddresses"
+    
     #pref <- "{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'"
     pref <- URLencode("{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'", reserved = TRUE)
   }
@@ -56,7 +57,7 @@ geocodeSL <- function (address, token, geocoder = "USA_Comp", postal = TRUE){
                                                 #locName = attributes$Loc_name,
                                                 status = attributes$Status,
                                                 matchAddr = attributes$Match_addr,
-                                                side = attributes$Side,
+                                                #side = attributes$Side,
                                                 addressType = attributes$Addr_type)})
   return(resdf)
 }
