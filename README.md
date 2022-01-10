@@ -34,7 +34,7 @@ Now let's put together a URL that will determine the location for `380 New York 
 Here is what we need:
 
 - The request URL
-    `https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite /GeocodeServer/geocodeAddresses`
+    `https://locator.stanford.edu/arcgis/rest/services/Geocode/NorthAmerica_Composite/GeocodeServer/geocodeAddresses`
 
 - The request parameters, required are `addresses=`, `token=`, and `format=` (for output).
 
