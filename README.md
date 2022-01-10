@@ -57,13 +57,13 @@ The addresses then need to be [URL encoded](https://en.wikipedia.org/wiki/Percen
 
 That makes for the following, rather cryptic looking URL:
 
-    https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses?addresses=%7B%22records%22%3A%5B%7B%22attributes%22%3A%7B%22OBJECTID%22%3A1%2C%22SingleLine%22%3A%22380+New+York+St.%2C+Redlands%2CCA%22%7D%7D%5D%7D&&token=<YOUR TOKEN>&f=pjson
+    https://locator.stanford.edu/arcgis/rest/services/Geocode/NorthAmerica_Composite/GeocodeServer/geocodeAddresses?addresses=%7B%22records%22%3A%5B%7B%22attributes%22%3A%7B%22OBJECTID%22%3A1%2C%22SingleLine%22%3A%22380+New+York+St.%2C+Redlands%2CCA%22%7D%7D%5D%7D&&token=<YOUR TOKEN>&f=pjson
 
 The ArcGIS REST geocoding service v10.0 and later takes addresses in [Single Line (also called single field) and Multi Line (also called multi field) mode](http://support.esri.com/technical-article/000011000). That means that the addresses in your table can be stored in a single field (as used in the URL above) or in multiple, separate fields, one for each address component (Street, City, etc). 
 
 Furthermore, there are two ways to send the addresses to the geocoding service: individually or as batch of several. Individual requests are more time consuming. For example, geocoding 1000 addresses takes over 2 minutes as single requests vs. 15 seconds as batch request. Batch geocoding is slightly faster when the address components are stored in separate fields (Multi Line). However, if there is an error in your batch, all the addresses in that batch that already have been geocoded will be dropped. **The maximum number of addresses that can be geocoded in a single batch request on the Stanford geocode server is 1000**.
 
-Lastly, there are two different geocoding services available for the US on Stanford's geolocator: _USA_Composite_ and _USA_StreetAddress_. I have found that for Single Line mode USA Composite provides (supposedly more exact) "PointAddress" results and USA StreetAddress returns (expectedly) "StreetAddress" results, while in Multiline (Batch) mode USA Composite returns "Locality", but USA StreetAddress provides (also expectedly, but possibly more exact) "StreetAddress" results.
+Lastly, there are two different geocoding services available for the US on Stanford's geolocator: _NorthAmerica_Composite_ and _USA_StreetAddress_. I have found that for Single Line mode USA Composite provides (supposedly more exact) "PointAddress" results and USA StreetAddress returns (expectedly) "StreetAddress" results, while in Multiline (Batch) mode USA Composite returns "Locality", but USA StreetAddress provides (also expectedly, but possibly more exact) "StreetAddress" results.
 
 ## R geocode functions
 
