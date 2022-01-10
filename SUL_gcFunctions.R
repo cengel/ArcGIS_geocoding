@@ -24,13 +24,13 @@ geocodeSL <- function (address, token, geocoder = "USA_Comp", postal = TRUE){
   
   if (geocoder == "USA_Str"){
     # Stanford geolocator
-    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_StreetAddress/GeocodeServer/GeocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/Geocode/USA_StreetAddress/GeocodeServer/GeocodeAddresses"
     # template for Single Line format
     #pref <- "{'records':[{'attributes':{'OBJECTID':1,'Single Line Input':'"
     pref <- URLencode("{'records':[{'attributes':{'OBJECTID':1,'Single Line Input':'", reserved = TRUE)
   }
   else if (geocoder == "USA_Comp") {
-    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/NorthAmerica_Composite/GeocodeServer/GeocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/Geocode/NorthAmerica_Composite/GeocodeServer/GeocodeAddresses"
     #pref <- "{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'"
     pref <- URLencode("{'records':[{'attributes':{'OBJECTID':1,'SingleLine':'", reserved = TRUE)
   }
