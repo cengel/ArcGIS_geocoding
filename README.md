@@ -103,7 +103,7 @@ To use it do this.
 
 ```R
 # make up some addresses:
-adr <- c('450 Serra Mall, Stanford, CA, 94305',
+adr <- c('450 Jane Stanford Way, Stanford, CA, 94305',
          '1600 Amphitheatre Pkwy, Mountain View, CA 94043',
          '1355 Market Street Suite 900, San Francisco, CA 94103')
 
@@ -153,7 +153,7 @@ To use it do this.
 # make up a data frame with some addresses:
 adr_df <- data.frame(
   ID = 1:3,
-  street = c('450 Serra Mall', '1600 Amphitheatre Pkwy', '1355 Market Street Suite 900'), 
+  street = c('450 Jane Stanford Way', '1600 Amphitheatre Pkwy', '1355 Market Street Suite 900'), 
   city = c('Stanford', 'Mountain View', 'San Francisco'), 
   state = 'CA', 
   zip = c('94305', '94043', '94103'))
