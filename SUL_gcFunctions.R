@@ -125,10 +125,10 @@ geocodeML_batch <- function(id, street, city, state, zip, token, geocoder = "USA
   adr_json_enc <- URLencode(adr_json, reserved = TRUE)
   
   if(geocoder == "USA_Comp"){
-    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_Composite/GeocodeServer/geocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/Geocode/NorthAmerica_Composite/GeocodeServer/geocodeAddresses"
     }
   else if(geocoder == "USA_Str"){
-    gserver <- "https://locator.stanford.edu/arcgis/rest/services/geocode/USA_StreetAddress/GeocodeServer/geocodeAddresses"
+    gserver <- "https://locator.stanford.edu/arcgis/rest/services/Geocode/USA_StreetAddress/GeocodeServer/geocodeAddresses"
   }
   else{
     stop(paste(geocoder, "please provide a valid geocoder"))
@@ -153,7 +153,7 @@ geocodeML_batch <- function(id, street, city, state, zip, token, geocoder = "USA
                                               #locName = attributes$Loc_name,
                                               status = attributes$Status,
                                               matchAddr = attributes$Match_addr,
-                                              side = attributes$Side,
+                                              #side = attributes$Side,
                                               addressType = attributes$Addr_type)})
     resdfr <- rbind(resdfr, d)
   }
