@@ -96,13 +96,13 @@ geocodeML_batch <- function(id, street, city, state, zip, geocoder = "USA"){
   
   # make data frame
   adr_df <- data.frame(OBJECTID = id,  # we need the id to be called OBJECTID
-                       Street = street,
+                       Address = street,
                        City = city,
-                       State = state,
-                       Zip = zip)
+                       Region = state,
+                       Postal = zip)
 
   # Set missing ZIP codes to empty strings
-  adr_df$Zip <- ifelse(is.na(adr_df$Zip), '', as.character(adr_df$Zip))
+  adr_df$Zip <- ifelse(is.na(adr_df$Postal), '', as.character(adr_df$Postal))
   
   # make json
   tmp_list <- apply(adr_df, 1, function(i) list(attributes = as.list(i)))

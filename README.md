@@ -144,7 +144,7 @@ addressType - The match level for a geocode request. "PointAddress" is typically
                but without the house number.  
 
 
-To use it do this.
+To use it do this. (To geocode non-US addresses, set state = the respective country.)
 
 ``` R
 # make up a data frame with some addresses:
@@ -164,9 +164,18 @@ merge(adr_df, adr_gc_comp, by = "ID", all.x = T)
 adr_gc_street <- geocodeML_batch(adr_df$ID, adr_df$street, adr_df$city, adr_df$state, adr_df$zip, geocoder = "NorthAmerica")
 # join back with address data
 merge(adr_df, adr_gc_street, by = "ID", all.x = T)
+
+# geocode with Latin America
+adr_df <- data.frame(
+  ID = 1,
+  street = c('Bouchard 547'), 
+  city = c('Buenos Aires'), 
+  state = c('Argentina'), 
+  zip = c('C1106'))
+geocodeML_batch(adr_df$ID, adr_df$street, adr_df$city, adr_df$state, adr_df$zip, geocoder="LatinAmerica")
 ```
 
-If you have more than 1000 addresses, here is a snippet that sends your addresses in 1000 batches.
+If you have more than 1000 addresses, here is a snippet that sends your addresses in batches of 1000.
 
 ``` R
 # assumes your addresses are in adr_df
