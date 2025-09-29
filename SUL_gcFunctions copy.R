@@ -38,28 +38,14 @@ geocodeSL <- function (address, geocoder = "USA"){
   
   # parse JSON and process result
   res <- content(rawdata, "parsed", "application/json")
-  resdf <- with(res$locations[[1]], {
-    if ("location" %in% names(res$locations[[1]])){ # check if any coords are found
-      data.frame(lon = as.numeric(location$x),
-                 lat = as.numeric(location$y),
-                 score = score, 
-                 #locName = attributes$Loc_name,
-                 status = attributes$Status,
-                 matchAddr = attributes$Match_addr,
-                 #side = attributes$Side,
-                 addressType = attributes$Addr_type)
-    }
-    else{
-      data.frame(lon = NA,
-                 lat = NA,
-                 score = NA, 
-                 #locName = attributes$Loc_name,
-                 status = NA_character_,
-                 matchAddr = NA_character_,
-                 #side = attributes$Side,
-                 addressType = NA_character_)
-    }
-    })
+  resdf <- with(res$locations[[1]], {data.frame(lon = as.numeric(location$x),
+                                                lat = as.numeric(location$y),
+                                                score = score, 
+                                                #locName = attributes$Loc_name,
+                                                status = attributes$Status,
+                                                matchAddr = attributes$Match_addr,
+                                                #side = attributes$Side,
+                                                addressType = attributes$Addr_type)})
   return(resdf)
 }
 
